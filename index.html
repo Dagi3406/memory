@@ -395,6 +395,20 @@ footer .tiny{font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;font-w
 .lb-count{position:fixed;bottom:clamp(18px,4vw,36px);left:50%;transform:translateX(-50%);font-size:.62rem;letter-spacing:.36em;text-transform:uppercase;font-weight:700;color:var(--coffee-faint);display:flex;flex-direction:column;align-items:center;gap:6px}
 .lb-hint{font-size:.5rem;letter-spacing:.28em;color:var(--coffee-faint);opacity:.65}
 @media(max-width:640px){.lb-btn{width:44px;height:44px;font-size:1.2rem}.lb-frame img{max-height:54vh}.lb-hint{display:none}}
+#musicBtn{position:fixed;bottom:clamp(18px,3vw,28px);left:clamp(18px,3vw,28px);z-index:450;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--coffee);color:var(--cream);box-shadow:0 14px 34px -12px rgba(43,26,15,.6);transition:.45s var(--ease)}
+#musicBtn:hover{transform:translateY(-4px) scale(1.08);box-shadow:0 22px 44px -14px rgba(43,26,15,.75)}
+#musicBtn:active{transform:scale(.94)}
+#musicBtn svg{width:22px;height:22px;stroke:var(--gold-lt);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#musicBtn .bars{display:flex;align-items:flex-end;gap:2.5px;height:16px}
+#musicBtn .bars i{width:3px;border-radius:2px;background:var(--gold-lt);display:block;animation:musicBar 1s ease-in-out infinite;animation-play-state:paused}
+#musicBtn.playing .bars i{animation-play-state:running}
+#musicBtn .bars i:nth-child(1){height:40%;animation-delay:0s}
+#musicBtn .bars i:nth-child(2){height:100%;animation-delay:.15s}
+#musicBtn .bars i:nth-child(3){height:65%;animation-delay:.3s}
+@keyframes musicBar{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+#musicBtn.playing::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1.5px solid rgba(212,160,42,.4);animation:ripple 2.6s ease-out infinite;pointer-events:none}
+#musicToast{position:fixed;bottom:90px;left:clamp(18px,3vw,28px);z-index:600;padding:11px 20px;border-radius:100px;background:var(--coffee);color:var(--cream);font-size:.66rem;letter-spacing:.1em;text-transform:none;font-weight:600;pointer-events:none;box-shadow:0 14px 34px -12px rgba(43,26,15,.6);opacity:0;transition:opacity .4s var(--ease),transform .4s var(--ease);transform:translateY(8px);max-width:min(72vw,260px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#musicToast.show{opacity:1;transform:none}
 #hugBtn{position:fixed;bottom:clamp(18px,3vw,28px);right:clamp(18px,3vw,28px);z-index:450;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--coffee);color:var(--cream);box-shadow:0 14px 34px -12px rgba(43,26,15,.6);transition:.45s var(--ease)}
 #hugBtn:hover{transform:translateY(-4px) scale(1.08);box-shadow:0 22px 44px -14px rgba(43,26,15,.75)}
 #hugBtn:active{transform:scale(.94)}
@@ -840,14 +854,28 @@ footer .tiny{font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;font-w
   </svg>
 </button>
 
+<audio id="bgMusic" loop preload="none"></audio>
+<button id="musicBtn" aria-label="Play our song" title="Play our song">
+  <svg id="musicIconNote" viewBox="0 0 24 24">
+    <path d="M9 18V5l12-2v13"/>
+    <circle cx="6" cy="18" r="3"/>
+    <circle cx="18" cy="16" r="3"/>
+  </svg>
+  <span class="bars" id="musicBars" hidden><i></i><i></i><i></i></span>
+</button>
+<div id="musicToast"></div>
+
 <script>
 const CONFIG = {
   herName: "Tlaye",
   nickname: "Yene Tla",
   relationship: "my girlfriend",
-  yourName: "your J.",
+  yourName: "Dagi.",
   togetherSince: "2023-02-14",
   firstCallDate: "2026-04-24",
+  // Upload your song file alongside the photos and put its filename here (mp3, m4a, wav, ogg all work).
+  // Leave title/artist blank to hide that line in the toast.
+  music: { file: "Dawit Tsige.mp3", title: "", DawitTsige: "" },
   phrases: [
     { am:"ፍቅሬ", translit:"Fikre", meaning:"My love" },
     { am:"የኔ ጥላ", translit:"Yene Tla", meaning:"My Tla — my shadow, my person" },
@@ -2012,6 +2040,56 @@ function stepPhoto(n){
     grid.appendChild(card);
     io.observe(card);
   });
+})();
+
+/* ---------- background music ---------- */
+(function(){
+  const btn = $("#musicBtn");
+  const audio = $("#bgMusic");
+  const note = $("#musicIconNote");
+  const bars = $("#musicBars");
+  const toast = $("#musicToast");
+  if (!btn || !audio) return;
+
+  const m = CONFIG.music || {};
+  if (!m.file){ btn.style.display = "none"; return; }
+  audio.src = m.file;
+  audio.volume = 0.55;
+
+  let toastTimer = null;
+  function showToast(text){
+    if (!toast) return;
+    toast.textContent = text;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+  }
+
+  function setPlayingUI(playing){
+    btn.classList.toggle("playing", playing);
+    btn.title = playing ? "Pause our song" : "Play our song";
+    btn.setAttribute("aria-label", btn.title);
+    if (note) note.style.display = playing ? "none" : "block";
+    if (bars) bars.hidden = !playing;
+  }
+
+  btn.addEventListener("click", async () => {
+    try {
+      if (audio.paused){
+        await audio.play();
+        setPlayingUI(true);
+        const label = [m.title, m.artist].filter(Boolean).join(" · ");
+        showToast(label ? "playing · " + label : "playing our song 🎶");
+      } else {
+        audio.pause();
+        setPlayingUI(false);
+      }
+    } catch (err){
+      showToast("couldn't find the song file — check CONFIG.music.file");
+    }
+  });
+
+  audio.addEventListener("ended", () => setPlayingUI(!audio.paused));
 })();
 
 /* ---------- hug button ---------- */
