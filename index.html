@@ -101,7 +101,7 @@ nav.scrolled .tilet-strip{opacity:1}
 .cup-steam span{width:9px;height:9px;border-radius:50%;background:rgba(90,59,38,.4);filter:blur(5px);animation:steamUp 3s ease-out infinite}
 .cup-steam span:nth-child(2){animation-delay:.75s;width:7px;height:7px}
 .cup-steam span:nth-child(3){animation-delay:1.5s;width:11px;height:11px}
-.scroll-cue{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;font-size:.6rem;letter-spacing:.42em;text-transform:uppercase;font-weight:700;color:var(--coffee-faint);opacity:0;animation:riseIn 1s var(--ease) 1.6s forwards}
+.scroll-cue{position:absolute;bottom:112px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;font-size:.6rem;letter-spacing:.42em;text-transform:uppercase;font-weight:700;color:var(--coffee-faint);opacity:0;animation:riseIn 1s var(--ease) 1.6s forwards}
 .scroll-cue .line{width:1.5px;height:42px;background:linear-gradient(var(--gold),transparent);animation:cueDrop 2.2s var(--ease) infinite}
 @keyframes cueDrop{0%{transform:scaleY(.15);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(.15);transform-origin:bottom}}
 .phrases{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
@@ -370,7 +370,7 @@ nav.scrolled .tilet-strip{opacity:1}
 .reason .ic{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;margin-bottom:18px;background:rgba(212,160,42,.13);font-family:'Noto Serif Ethiopic',serif;font-size:1.15rem;font-weight:600;color:var(--terra)}
 .reason h3{font-family:'Fraunces',serif;font-weight:500;font-size:1.2rem;margin-bottom:10px;letter-spacing:-.01em}
 .reason p{color:var(--coffee-2);font-size:.93rem;line-height:1.7}
-footer{position:relative;z-index:3;text-align:center;padding:90px 24px 70px;border-top:1px solid var(--line);margin-top:60px}
+footer{position:relative;z-index:3;text-align:center;padding:90px 24px 130px;border-top:1px solid var(--line);margin-top:60px}
 .foot-tilet{width:min(320px,80%);height:14px;margin:0 auto 40px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='14'%3E%3Cpath d='M11 1.5 L20 7 L11 12.5 L2 7 Z' fill='none' stroke='%23d4a02a' stroke-width='1'/%3E%3Cpath d='M11 4 L15.5 7 L11 10 L6.5 7 Z' fill='%231a6b4a'/%3E%3Ccircle cx='11' cy='7' r='1' fill='%23b8431f'/%3E%3C/svg%3E");background-repeat:repeat-x;background-size:22px 14px;opacity:.6}
 .foot-am{font-family:'Noto Serif Ethiopic',serif;font-size:clamp(1.5rem,4vw,2.2rem);font-weight:600;color:var(--gold);margin-bottom:12px}
 .foot-en{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1.05rem,2.4vw,1.3rem);color:var(--coffee-2)}
@@ -395,10 +395,25 @@ footer .tiny{font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;font-w
 .lb-count{position:fixed;bottom:clamp(18px,4vw,36px);left:50%;transform:translateX(-50%);font-size:.62rem;letter-spacing:.36em;text-transform:uppercase;font-weight:700;color:var(--coffee-faint);display:flex;flex-direction:column;align-items:center;gap:6px}
 .lb-hint{font-size:.5rem;letter-spacing:.28em;color:var(--coffee-faint);opacity:.65}
 @media(max-width:640px){.lb-btn{width:44px;height:44px;font-size:1.2rem}.lb-frame img{max-height:54vh}.lb-hint{display:none}}
-#musicBtn{position:fixed;bottom:clamp(18px,3vw,28px);left:clamp(18px,3vw,28px);z-index:450;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--coffee);color:var(--cream);box-shadow:0 14px 34px -12px rgba(43,26,15,.6);transition:.45s var(--ease)}
-#musicBtn:hover{transform:translateY(-4px) scale(1.08);box-shadow:0 22px 44px -14px rgba(43,26,15,.75)}
+
+/* ---------- music player (with back / next) ---------- */
+#musicPlayer{position:fixed;bottom:clamp(18px,3vw,28px);left:clamp(18px,3vw,28px);z-index:450;
+  display:flex;align-items:center;gap:3px;padding:6px;border-radius:100px;
+  background:var(--coffee);border:1px solid rgba(212,160,42,.22);
+  box-shadow:0 16px 36px -14px rgba(43,26,15,.6);
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+#musicPlayer:hover{transform:translateY(-3px);box-shadow:0 22px 44px -14px rgba(43,26,15,.78)}
+.mp-btn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;
+  color:var(--gold-lt);transition:.35s var(--ease)}
+.mp-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mp-btn:hover{background:rgba(240,201,90,.16);transform:scale(1.08)}
+.mp-btn:active{transform:scale(.92)}
+.mp-btn:disabled{opacity:.22;cursor:not-allowed;background:none;transform:none}
+#musicBtn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;position:relative;
+  background:rgba(212,160,42,.15);color:var(--cream);transition:.4s var(--ease)}
+#musicBtn:hover{background:rgba(212,160,42,.28);transform:scale(1.07)}
 #musicBtn:active{transform:scale(.94)}
-#musicBtn svg{width:22px;height:22px;stroke:var(--gold-lt);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#musicBtn svg{width:20px;height:20px;stroke:var(--gold-lt);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 #musicBtn .bars{display:flex;align-items:flex-end;gap:2.5px;height:16px}
 #musicBtn .bars i{width:3px;border-radius:2px;background:var(--gold-lt);display:block;animation:musicBar 1s ease-in-out infinite;animation-play-state:paused}
 #musicBtn.playing .bars i{animation-play-state:running}
@@ -407,8 +422,34 @@ footer .tiny{font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;font-w
 #musicBtn .bars i:nth-child(3){height:65%;animation-delay:.3s}
 @keyframes musicBar{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
 #musicBtn.playing::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1.5px solid rgba(212,160,42,.4);animation:ripple 2.6s ease-out infinite;pointer-events:none}
-#musicToast{position:fixed;bottom:90px;left:clamp(18px,3vw,28px);z-index:600;padding:11px 20px;border-radius:100px;background:var(--coffee);color:var(--cream);font-size:.66rem;letter-spacing:.1em;text-transform:none;font-weight:600;pointer-events:none;box-shadow:0 14px 34px -12px rgba(43,26,15,.6);opacity:0;transition:opacity .4s var(--ease),transform .4s var(--ease);transform:translateY(8px);max-width:min(72vw,260px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#musicInfo{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+  color:rgba(247,241,230,.72);padding:0 12px 0 6px;max-width:132px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:620px){#musicInfo{display:none}}
+@media(max-width:400px){#musicPlayer{padding:5px;gap:1px}.mp-btn{width:34px;height:34px}#musicBtn{width:40px;height:40px}}
+
+#musicToast{position:fixed;bottom:92px;left:clamp(18px,3vw,28px);z-index:600;padding:11px 20px;border-radius:100px;background:var(--coffee);color:var(--cream);font-size:.66rem;letter-spacing:.1em;text-transform:none;font-weight:600;pointer-events:none;box-shadow:0 14px 34px -12px rgba(43,26,15,.6);opacity:0;transition:opacity .4s var(--ease),transform .4s var(--ease);transform:translateY(8px);max-width:min(72vw,260px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #musicToast.show{opacity:1;transform:none}
+
+/* ---------- section back / next bar ---------- */
+#sectionNav{position:fixed;bottom:clamp(18px,3vw,28px);left:50%;transform:translateX(-50%);z-index:450;
+  display:flex;align-items:center;gap:2px;padding:5px 6px;border-radius:100px;
+  background:rgba(255,250,241,.88);
+  backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid var(--line);box-shadow:0 14px 34px -18px rgba(43,26,15,.45);
+  transition:box-shadow .45s var(--ease),transform .45s var(--ease)}
+#sectionNav:hover{box-shadow:0 20px 40px -18px rgba(43,26,15,.55)}
+.sn-btn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;
+  color:var(--coffee-2);transition:.35s var(--ease)}
+.sn-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sn-btn:hover{background:var(--coffee);color:var(--cream);transform:scale(1.07)}
+.sn-btn:active{transform:scale(.92)}
+.sn-btn:disabled{opacity:.22;cursor:not-allowed;background:none;color:var(--coffee-2);transform:none}
+#secLabel{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:var(--coffee-3);
+  padding:0 12px;min-width:108px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:640px){#secLabel{min-width:74px;padding:0 6px;font-size:.52rem;letter-spacing:.16em}.sn-btn{width:34px;height:34px}}
+@media(max-width:380px){#secLabel{display:none}#sectionNav{padding:5px 4px}}
+
 #hugBtn{position:fixed;bottom:clamp(18px,3vw,28px);right:clamp(18px,3vw,28px);z-index:450;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--coffee);color:var(--cream);box-shadow:0 14px 34px -12px rgba(43,26,15,.6);transition:.45s var(--ease)}
 #hugBtn:hover{transform:translateY(-4px) scale(1.08);box-shadow:0 22px 44px -14px rgba(43,26,15,.75)}
 #hugBtn:active{transform:scale(.94)}
@@ -418,7 +459,7 @@ footer .tiny{font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;font-w
 @keyframes hugPulse{0%{transform:scale(1)}30%{transform:scale(1.18)}60%{transform:scale(.95)}100%{transform:scale(1)}}
 .hug-heart{position:fixed;pointer-events:none;z-index:600;animation:hugFloat 2.4s var(--ease) forwards;will-change:transform,opacity;user-select:none}
 @keyframes hugFloat{0%{transform:translate(-50%,-50%) scale(.4) rotate(0);opacity:0}15%{opacity:1;transform:translate(-50%,-50%) scale(1.1) rotate(0)}100%{transform:translate(calc(-50% + var(--dx)), calc(-50% - 260px)) scale(.7) rotate(var(--rot));opacity:0}}
-.hug-toast{position:fixed;bottom:90px;right:clamp(18px,3vw,28px);z-index:600;padding:11px 20px;border-radius:100px;background:var(--coffee);color:var(--cream);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;pointer-events:none;box-shadow:0 14px 34px -12px rgba(43,26,15,.6);animation:toastIn 2.4s var(--ease) forwards}
+.hug-toast{position:fixed;bottom:92px;right:clamp(18px,3vw,28px);z-index:600;padding:11px 20px;border-radius:100px;background:var(--coffee);color:var(--cream);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;pointer-events:none;box-shadow:0 14px 34px -12px rgba(43,26,15,.6);animation:toastIn 2.4s var(--ease) forwards}
 @keyframes toastIn{0%{transform:translateY(14px);opacity:0}15%,80%{transform:none;opacity:1}100%{transform:translateY(-6px);opacity:0}}
 #beans{position:fixed;inset:0;z-index:0;pointer-events:none}
 .mem-empty{grid-column:1/-1;text-align:center;padding:20px;color:var(--coffee-faint);font-size:.85rem}
@@ -854,15 +895,36 @@ footer .tiny{font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;font-w
   </svg>
 </button>
 
-<audio id="bgMusic" loop preload="none"></audio>
-<button id="musicBtn" aria-label="Play our song" title="Play our song">
-  <svg id="musicIconNote" viewBox="0 0 24 24">
-    <path d="M9 18V5l12-2v13"/>
-    <circle cx="6" cy="18" r="3"/>
-    <circle cx="18" cy="16" r="3"/>
-  </svg>
-  <span class="bars" id="musicBars" hidden><i></i><i></i><i></i></span>
-</button>
+<!-- ===== section back / next ===== -->
+<div id="sectionNav" role="group" aria-label="Section navigation">
+  <button class="sn-btn" id="secPrev" aria-label="Previous section" title="Back">
+    <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <span id="secLabel">Start</span>
+  <button class="sn-btn" id="secNext" aria-label="Next section" title="Next">
+    <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+</div>
+
+<!-- ===== music player ===== -->
+<audio id="bgMusic" preload="metadata"></audio>
+<div id="musicPlayer">
+  <button class="mp-btn" id="musicPrev" aria-label="Previous track" title="Previous track">
+    <svg viewBox="0 0 24 24"><path d="M19 20 9 12l10-8z"/><path d="M5 19V5"/></svg>
+  </button>
+  <button id="musicBtn" aria-label="Play our song" title="Play our song">
+    <svg id="musicIconNote" viewBox="0 0 24 24">
+      <path d="M9 18V5l12-2v13"/>
+      <circle cx="6" cy="18" r="3"/>
+      <circle cx="18" cy="16" r="3"/>
+    </svg>
+    <span class="bars" id="musicBars" hidden><i></i><i></i><i></i></span>
+  </button>
+  <button class="mp-btn" id="musicNext" aria-label="Next track" title="Next track">
+    <svg viewBox="0 0 24 24"><path d="M5 4l10 8-10 8z"/><path d="M19 5v14"/></svg>
+  </button>
+  <span id="musicInfo">our song</span>
+</div>
 <div id="musicToast"></div>
 
 <script>
@@ -873,9 +935,26 @@ const CONFIG = {
   yourName: "Dagi.",
   togetherSince: "2023-02-14",
   firstCallDate: "2026-04-24",
-  // Upload your song file alongside the photos and put its filename here (mp3, m4a, wav, ogg all work).
-  // Leave title/artist blank to hide that line in the toast.
-  music: { file: "Dawit Tsige.mp3", title: "", DawitTsige: "" },
+
+  /* ===== MUSIC =====
+     Put your song files next to this HTML file and list them here.
+     The ⏮ / ⏭ buttons in the player move between tracks (they loop).
+     You can add as many tracks as you want.
+     If a track has no title, the file name is shown instead. */
+  music: {
+    volume: 0.55,
+    tracks: [
+      { file: "Dawit Tsige.mp3", title: "", artist: "" },
+      { file: "Michael Belayneh.mp3", title: "", artist: "" },
+      { file: "Dawit Mellesse - Lalkedash Kal Alegn.mp3", title: "", artist: "" },
+      { file: "Nhatty man -Salaysh.mp3", title: "", artist: "" },
+      { file: "Amsaya _ Sami-Dan.mp3", title: "", artist: "" },
+      { file: "Dawit Melesse - Konjo Bager (Lyrics).mp3", title: "", artist: "" },
+      // { file: "song-two.mp3", title: "Song Two", artist: "Artist" },
+      // { file: "song-three.mp3", title: "Song Three", artist: "Artist" }
+    ]
+  },
+
   phrases: [
     { am:"ፍቅሬ", translit:"Fikre", meaning:"My love" },
     { am:"የኔ ጥላ", translit:"Yene Tla", meaning:"My Tla — my shadow, my person" },
@@ -886,7 +965,7 @@ const CONFIG = {
     { am:"ጣፋጭ", translit:"Tafach", meaning:"Sweet one" },
     { am:"እወድሻለሁ", translit:"Ewedishalehu", meaning:"I love you" }
   ],
-   photos: [
+  photos: [
     { url: "photo (1).jpg",  caption: "" },
     { url: "photo (2).jpg",  caption: "" },
     { url: "photo (3).jpg",  caption: "" },
@@ -2042,21 +2121,50 @@ function stepPhoto(n){
   });
 })();
 
-/* ---------- background music ---------- */
+/* ---------- background music (play · back · next) ---------- */
 (function(){
-  const btn = $("#musicBtn");
-  const audio = $("#bgMusic");
-  const note = $("#musicIconNote");
-  const bars = $("#musicBars");
-  const toast = $("#musicToast");
+  const player   = document.getElementById("musicPlayer");
+  const btn      = document.getElementById("musicBtn");
+  const audio    = document.getElementById("bgMusic");
+  const note     = document.getElementById("musicIconNote");
+  const bars     = document.getElementById("musicBars");
+  const toast    = document.getElementById("musicToast");
+  const info     = document.getElementById("musicInfo");
+  const prevBtn  = document.getElementById("musicPrev");
+  const nextBtn  = document.getElementById("musicNext");
   if (!btn || !audio) return;
 
   const m = CONFIG.music || {};
-  if (!m.file){ btn.style.display = "none"; return; }
-  audio.src = m.file;
-  audio.volume = 0.55;
 
+  /* build the playlist — supports the new `tracks` array
+     and the old single `file` / `title` style */
+  let tracks = [];
+  if (Array.isArray(m.tracks) && m.tracks.length){
+    tracks = m.tracks.filter(t => t && typeof t.file === "string" && t.file.trim());
+  } else if (typeof m.file === "string" && m.file.trim()){
+    tracks = [{ file: m.file, title: m.title || "", artist: m.artist || "" }];
+  }
+
+  if (!tracks.length){
+    if (player) player.style.display = "none";
+    return;
+  }
+
+  let idx = 0;
   let toastTimer = null;
+
+  audio.preload = "metadata";
+  audio.loop = tracks.length === 1;                       // one track → loop it
+  audio.volume = typeof m.volume === "number"
+    ? Math.min(1, Math.max(0, m.volume))
+    : 0.55;
+
+  const label = t => {
+    if (!t) return "our song";
+    const named = [t.title, t.artist].filter(Boolean).join(" · ");
+    return named || t.file.replace(/\.[^.]+$/, "") || "our song";
+  };
+
   function showToast(text){
     if (!toast) return;
     toast.textContent = text;
@@ -2073,23 +2181,134 @@ function stepPhoto(n){
     if (bars) bars.hidden = !playing;
   }
 
-  btn.addEventListener("click", async () => {
-    try {
-      if (audio.paused){
-        await audio.play();
-        setPlayingUI(true);
-        const label = [m.title, m.artist].filter(Boolean).join(" · ");
-        showToast(label ? "playing · " + label : "playing our song 🎶");
-      } else {
-        audio.pause();
-        setPlayingUI(false);
-      }
-    } catch (err){
-      showToast("couldn't find the song file — check CONFIG.music.file");
-    }
+  function load(i){
+    idx = ((i % tracks.length) + tracks.length) % tracks.length;
+    audio.src = tracks[idx].file;
+    if (info) info.textContent = label(tracks[idx]);
+  }
+
+  function play(announce){
+    audio.play().then(() => {
+      setPlayingUI(true);
+      if (announce) showToast("playing · " + label(tracks[idx]));
+    }).catch(() => {
+      setPlayingUI(false);
+      showToast("couldn't play — check the file name");
+    });
+  }
+
+  function step(n){
+    load(idx + n);
+    play(true);
+  }
+
+  /* play / pause */
+  btn.addEventListener("click", () => {
+    if (audio.paused) play(true);
+    else { audio.pause(); setPlayingUI(false); }
   });
 
-  audio.addEventListener("ended", () => setPlayingUI(!audio.paused));
+  /* back / next */
+  if (prevBtn) prevBtn.addEventListener("click", () => step(-1));
+  if (nextBtn) nextBtn.addEventListener("click", () => step(1));
+
+  /* auto-advance when a track finishes (only when more than one track) */
+  audio.addEventListener("ended", () => { load(idx + 1); play(true); });
+
+  audio.addEventListener("error", () => {
+    if (!audio.getAttribute("src")) return;
+    setPlayingUI(false);
+    showToast("couldn't load · " + label(tracks[idx]));
+  });
+
+  const multi = tracks.length > 1;
+  if (prevBtn) prevBtn.disabled = !multi;
+  if (nextBtn) nextBtn.disabled = !multi;
+
+  load(0);
+  setPlayingUI(false);
+})();
+
+/* ---------- section back / next ---------- */
+(function(){
+  const bar      = document.getElementById("sectionNav");
+  const prevBtn  = document.getElementById("secPrev");
+  const nextBtn  = document.getElementById("secNext");
+  const labelEl  = document.getElementById("secLabel");
+  if (!bar) return;
+
+  const SECTIONS = [
+    { id:"top",       label:"Start" },
+    { id:"words",     label:"Words" },
+    { id:"gallery",   label:"Memories" },
+    { id:"buna",      label:"Buna" },
+    { id:"letter",    label:"Letter" },
+    { id:"firstcall", label:"Us" },
+    { id:"time",      label:"Time" },
+    { id:"cycle",     label:"Rhythm" },
+    { id:"notes",     label:"Notes" },
+    { id:"game",      label:"Play" },
+    { id:"mood",      label:"Mood" },
+    { id:"dates",     label:"Dates" },
+    { id:"reasons",   label:"Reasons" }
+  ].filter(s => document.getElementById(s.id));
+
+  if (!SECTIONS.length){ bar.style.display = "none"; return; }
+
+  let current = 0;
+  let raf = null;
+  const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function render(){
+    if (labelEl) labelEl.textContent = SECTIONS[current].label;
+    if (prevBtn) prevBtn.disabled = current === 0;
+    if (nextBtn) nextBtn.disabled = current === SECTIONS.length - 1;
+  }
+
+  function measure(){
+    raf = null;
+    const marker = window.scrollY + window.innerHeight * 0.4;
+    let idx = 0;
+    for (let i = 0; i < SECTIONS.length; i++){
+      const el = document.getElementById(SECTIONS[i].id);
+      if (!el) continue;
+      const top = el.getBoundingClientRect().top + window.scrollY;
+      if (top <= marker) idx = i;
+    }
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 6){
+      idx = SECTIONS.length - 1;
+    }
+    if (idx !== current){ current = idx; render(); }
+  }
+
+  function onScroll(){
+    if (raf) return;
+    raf = requestAnimationFrame(measure);
+  }
+
+  function go(step){
+    const i = Math.min(SECTIONS.length - 1, Math.max(0, current + step));
+    const el = document.getElementById(SECTIONS[i].id);
+    if (!el) return;
+    current = i;
+    render();
+    el.scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "start" });
+  }
+
+  if (prevBtn) prevBtn.addEventListener("click", () => go(-1));
+  if (nextBtn) nextBtn.addEventListener("click", () => go(1));
+
+  /* optional keyboard: Alt + ← / → */
+  document.addEventListener("keydown", e => {
+    if (!e.altKey) return;
+    if (e.key === "ArrowLeft"){ e.preventDefault(); go(-1); }
+    if (e.key === "ArrowRight"){ e.preventDefault(); go(1); }
+  });
+
+  window.addEventListener("scroll", onScroll, { passive:true });
+  window.addEventListener("resize", onScroll);
+  measure();
+  render();
 })();
 
 /* ---------- hug button ---------- */
